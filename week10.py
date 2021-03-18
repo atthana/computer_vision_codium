@@ -5,15 +5,37 @@
 # จิงๆ เราทำ dataset ตอนที่เราให้มันเซฟก่อนหน้าได้นะ สัก 50 รูป
 # 3. ลองเอาไปรันใน Pycharm ดีกว่านะ เพราะทำที่นี่เหมือนมันช้า
 
+import cv2
 import face_recognition
 import numpy as np
-import cv2
 
 known_faces = [
-    ('Beer', 'image/face/beer.jpg'),
-    ('Pang', 'image/face/pang.jpg'),
-    ('Awesome', 'image/face/Awesome.jpg'),
-    ('Q', 'image/face/q.jpg')
+
+    # ('Beer', 'image/face/beer.jpg'),
+    # ('Pang', 'image/face/pang.jpg'),
+    # ('Awesome', 'image/face/Awesome.jpg'),
+    # ('Q', 'image/face/q.jpg')
+
+    ('Q', 'codium_raw_photos/q1.jpg'),
+    # ('Q', 'codium_raw_photos/q2.JPG'),
+    ('Q', 'codium_raw_photos/q3.JPG'),
+    # ('Q', 'codium_raw_photos/q4.JPG'),
+    # ('Q', 'codium_raw_photos/q5.JPG'),
+    #
+    # ('Kukkik', 'codium_raw_photos/kukkik1.JPG'),
+    # ('Kukkik', 'codium_raw_photos/kukkik2.JPG'),
+    #
+    # ('Jane', 'codium_raw_photos/jane1.JPG'),
+    # ('Jane', 'codium_raw_photos/jane2.JPG'),
+    # ('Jane', 'codium_raw_photos/jane3.JPG'),
+    # ('Jane', 'codium_raw_photos/jane4.JPG'),
+    #
+    # ('Winner', 'codium_raw_photos/winner1.JPG'),
+    #
+    # ('Saeed', 'codium_raw_photos/saeed1.JPG'),
+    # ('Saeed', 'codium_raw_photos/saeed2.JPG'),
+    # ('Saeed', 'codium_raw_photos/saeed3.JPG'),
+
 ]
 
 known_face_names = []
@@ -21,7 +43,8 @@ known_face_encodings = []
 for face in known_faces:
     known_face_names.append(face[0])
     face_image = face_recognition.load_image_file(face[1])
-    #     print(face_image)
+    # print(face_image)
+    print(face_recognition.face_encodings(face_image))
     face_encoding = face_recognition.face_encodings(face_image)[0]
     known_face_encodings.append(face_encoding)
 
