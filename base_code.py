@@ -35,41 +35,48 @@ known_faces = [
     # ('Awesome', 'image/face/Awesome.jpg'),
     # ('Q', 'resize_raw_photos/q1.jpg')
 
+    ('Q', 'resize_raw_photos/q2.jpg'),
     ('Q', 'resize_raw_photos/q1.jpg'),
-    ('Q', 'resize_raw_photos/q2.jpg'),  # พอใช้ q2.jpg มันก้อพังเลย แต่พอ comment บรรทัดนี้มันก้อใช้งานได้นะ
-    # ('Q', 'resize_raw_photos/q2.jpg'),
-    # ('Q', 'resize_raw_photos/q3.jpg'),
-    # ('Q', 'resize_raw_photos/q4.jpg'),
-    # ('Q', 'resize_raw_photos/q5.jpg'),
-    #
-    # ('Kukkik', 'resize_raw_photos/kukkik1.jpg'),
-    # ('Kukkik', 'resize_raw_photos/kukkik2.jpg'),
-    #
-    # ('Jane', 'resize_raw_photos/jane1.jpg'),
-    # ('Jane', 'resize_raw_photos/jane2.jpg'),
-    # ('Jane', 'resize_raw_photos/jane3.jpg'),
-    # ('Jane', 'resize_raw_photos/jane4.jpg'),
-    #
-    # ('Winner', 'resize_raw_photos/winner1.jpg'),
-    #
-    # ('Saeed', 'resize_raw_photos/saeed1.jpg'),
-    # ('Saeed', 'resize_raw_photos/saeed2.jpg'),
-    # ('Saeed', 'resize_raw_photos/saeed3.jpg'),
+    ('Q', 'resize_raw_photos/q4.jpg'),
+    ('Q', 'resize_raw_photos/q5.jpg'),
+
+    ('Kukkik', 'resize_raw_photos/kukkik1.jpg'),
+    ('Kukkik', 'resize_raw_photos/kukkik2.jpg'),
+
+    ('Jane', 'resize_raw_photos/jane1.jpg'),
+    ('Jane', 'resize_raw_photos/jane2.jpg'),
+    ('Jane', 'resize_raw_photos/jane3.jpg'),
+    ('Jane', 'resize_raw_photos/jane4.jpg'),
+
+    ('Winner', 'resize_raw_photos/winner1.jpg'),
+
+    ('Saeed', 'resize_raw_photos/saeed1.jpg'),
+    ('Saeed', 'resize_raw_photos/saeed2.jpg'),
+    ('Saeed', 'resize_raw_photos/saeed3.jpg'),
+
+    ('Sookjai', 'resize_raw_photos/por1.jpg'),
+    ('Sookjai', 'resize_raw_photos/por2.jpg'),
+    ('Sookjai', 'resize_raw_photos/por3.jpg'),
 
 ]
 
-
 known_face_names = []
 known_face_encodings = []
+
 for face in known_faces:
-    known_face_names.append(face[0])
-    face_image = face_recognition.load_image_file(face[1])
-    print('--- face_image ----')
-    print(face_image)
-    print('--------face_recognition.face_encodings----------')
-    print(face_recognition.face_encodings(face_image))
-    face_encoding = face_recognition.face_encodings(face_image)[0]
-    known_face_encodings.append(face_encoding)
+    try:
+        known_face_names.append(face[0])
+        face_image = face_recognition.load_image_file(face[1])
+        print('--- face_image ----')
+        print(face_image)
+        print('--------face_recognition.face_encodings----------')
+        print(face_recognition.face_encodings(face_image))
+        face_encoding = face_recognition.face_encodings(face_image)[0]
+        known_face_encodings.append(face_encoding)
+    except IndexError as err:
+        print('--- Exception ---')
+        print(err)
+        pass
 
 # =========================================================
 
@@ -96,10 +103,19 @@ while True:
 
             face_distances = face_recognition.face_distance(known_face_encodings, face_encoding)
             best_match_index = np.argmin(face_distances)
-            if matches[best_match_index]:
-                name = known_face_names[best_match_index]
+            print('------  best match ---------')
+            print(face_distances)
+            print(best_match_index)
 
-            face_names.append(name)
+            if min(face_distances) < 0.5:  # if distance is low that mean => match
+                name = known_face_names[best_match_index]
+                face_names.append(name)
+            else:
+                face_names.append('Unknown')
+
+            # if matches[best_match_index]:
+            #     name = known_face_names[best_match_index]
+            # face_names.append(name)
 
     process_this_frame = not process_this_frame
 
