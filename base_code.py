@@ -10,7 +10,7 @@ import numpy as np
 
 video_capture = cv2.VideoCapture(0)
 
-obama_image = face_recognition.load_image_file('codium_raw_photos/q.jpg')
+obama_image = face_recognition.load_image_file('resize_raw_photos/q1.jpg')
 print(obama_image)
 obama_face_encoding = face_recognition.face_encodings(obama_image)[0]
 
