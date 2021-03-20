@@ -10,7 +10,13 @@ import imutils
 
 def resize_keep_aspect_ratio():
     input_folder = 'codium_raw_photos'
-    os.mkdir('resize_raw_photos')
+    output_folder = 'resize_raw_photos'
+
+    try:
+        os.mkdir(output_folder)
+    except OSError as err:
+        print('---------- err -----------')
+        print(err)
 
     for img in glob.glob(input_folder + '/*.JPG'):
         print('---- img ---')
