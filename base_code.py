@@ -64,7 +64,7 @@ while True:
             print(face_distances)
             print(best_match_index)
 
-            if min(face_distances) < 0.5:  # if distance is low that mean => match
+            if min(face_distances) < 0.45:  # if distance is low that mean => very match
                 name = known_face_names[best_match_index]
                 face_names.append(name)
             else:
