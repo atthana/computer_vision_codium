@@ -1,6 +1,7 @@
 import cv2
 import face_recognition
 import numpy as np
+import known_faces as faces
 
 # https://github.com/ageitgey/face_recognition/blob/master/examples/facerec_from_webcam_faster.py
 # 1. Need to load all images and resize photos and make a new set in new folder.
@@ -8,62 +9,18 @@ import numpy as np
 # 3. Refactor code to collect all name and location in the same place like teacher's code.
 # Use this code to be code base because it's faster than teacher's code.
 
-
-# atthana_image = face_recognition.load_image_file('resize_raw_photos/q1.jpg')
-# print(atthana_image)
-# atthana_face_encoding = face_recognition.face_encodings(atthana_image)[0]
-#
-# known_face_encodings = [
-#     atthana_face_encoding,
-#
-# ]
-# known_face_names = [
-#     "Atthana",
-#
-# ]
-
 face_locations = []
 face_encodings = []
 face_names = []
 
 process_this_frame = True
 # ========================================================
-known_faces = [
 
-    # ('Beer', 'image/face/beer.jpg'),
-    # ('Pang', 'image/face/pang.jpg'),
-    # ('Awesome', 'image/face/Awesome.jpg'),
-    # ('Q', 'resize_raw_photos/q1.jpg')
-
-    ('Q', 'resize_raw_photos/q2.jpg'),
-    ('Q', 'resize_raw_photos/q1.jpg'),
-    ('Q', 'resize_raw_photos/q4.jpg'),
-    ('Q', 'resize_raw_photos/q5.jpg'),
-
-    ('Kukkik', 'resize_raw_photos/kukkik1.jpg'),
-    ('Kukkik', 'resize_raw_photos/kukkik2.jpg'),
-
-    ('Jane', 'resize_raw_photos/jane1.jpg'),
-    ('Jane', 'resize_raw_photos/jane2.jpg'),
-    ('Jane', 'resize_raw_photos/jane3.jpg'),
-    ('Jane', 'resize_raw_photos/jane4.jpg'),
-
-    ('Winner', 'resize_raw_photos/winner1.jpg'),
-
-    ('Saeed', 'resize_raw_photos/saeed1.jpg'),
-    ('Saeed', 'resize_raw_photos/saeed2.jpg'),
-    ('Saeed', 'resize_raw_photos/saeed3.jpg'),
-
-    ('Sookjai', 'resize_raw_photos/por1.jpg'),
-    ('Sookjai', 'resize_raw_photos/por2.jpg'),
-    ('Sookjai', 'resize_raw_photos/por3.jpg'),
-
-]
 
 known_face_names = []
 known_face_encodings = []
 
-for face in known_faces:
+for face in faces.known_faces:
     try:
         known_face_names.append(face[0])
         face_image = face_recognition.load_image_file(face[1])
