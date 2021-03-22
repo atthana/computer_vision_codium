@@ -29,12 +29,13 @@ known_face_encodings = []
 
 for face in faces.known_faces:
     try:
+        print(face)
         known_face_names.append(face[0])
         face_image = face_recognition.load_image_file(face[1])
-        print('--- face_image ----')
-        print(face_image)
-        print('--------face_recognition.face_encodings----------')
-        print(face_recognition.face_encodings(face_image))
+        # print('--- face_image ----')
+        # print(face_image)
+        # print('--------face_recognition.face_encodings----------')
+        # print(face_recognition.face_encodings(face_image))
         face_encoding = face_recognition.face_encodings(face_image)[0]
         known_face_encodings.append(face_encoding)
     except IndexError as err:
@@ -67,9 +68,9 @@ while True:
 
             face_distances = face_recognition.face_distance(known_face_encodings, face_encoding)
             best_match_index = np.argmin(face_distances)
-            print('------  best match ---------')
-            print(face_distances)
-            print(best_match_index)
+            # print('------  best match ---------')
+            # print(face_distances)
+            # print(best_match_index)
 
             if min(face_distances) < 0.45:  # if distance is low that mean => very match
                 name = known_face_names[best_match_index]
