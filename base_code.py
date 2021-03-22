@@ -9,6 +9,13 @@ import known_faces as faces
 # 3. Refactor code to collect all name and location in the same place like teacher's code.
 # Use this code to be code base because it's faster than teacher's code.
 
+
+# Next steps:
+# 1. จะให้มัน logs เข้า Google sheets อย่างไร
+# 2. จะเช็คยังไงว่า อันนี้คือ check-in อันนีี้คือ check-out
+# 3. สร้าง function มาสำหรับถ่าย VDO แล้วก้อ capture หน้าออกมาเยอะๆเลย
+# 4. แต่หลังจากได้หน้าออกมาเยอะๆแล้ว จะต้องสร้าง function มา rename ชื่อให้มันและตามด้วยตัวเลขเรียงกันไปเยอะๆด้วย
+
 face_locations = []
 face_encodings = []
 face_names = []
