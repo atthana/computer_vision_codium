@@ -1,3 +1,5 @@
+import pickle
+
 import cv2
 import face_recognition
 import numpy as np
@@ -21,7 +23,7 @@ face_encodings = []
 face_names = []
 
 process_this_frame = True
-# ========================================================
+# ===================== Process to learn to make dataset ===================================
 
 
 known_face_names = []
@@ -34,12 +36,17 @@ for face in faces.known_faces:
         face_image = face_recognition.load_image_file(face[1])
         face_encoding = face_recognition.face_encodings(face_image)[0]
         known_face_encodings.append(face_encoding)
+
+        # with open('dataset_codium.dat', 'wb') as f:
+        #     pickle.dump(known_face_encodings, f)
+        #
+        # print('Finished creating dataset')
     except IndexError as err:
         print('--- Exception ---')
         print(err)
         pass
 
-# =========================================================
+# ======================= Below is process to compare faces from camera ==================================
 
 video_capture = cv2.VideoCapture(0)
 
@@ -49,7 +56,7 @@ while True:
 
     small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
 
-    rgb_small_frame = small_frame[:, :, ::-1]
+    rgb_small_frame = small_frame[:, :, ::-1]  # ทำอะไรอ่ะ ต้องถามกุ๊กกิ๊ก
 
     if process_this_frame:
 
@@ -71,11 +78,11 @@ while True:
             else:
                 face_names.append('Unknown')
 
-            # if matches[best_match_index]:
+            # if matches[best_match_index]:  # The example checking match from github face_recognition.
             #     name = known_face_names[best_match_index]
             # face_names.append(name)
 
-    process_this_frame = not process_this_frame
+    process_this_frame = not process_this_frame  # คืออะไรค้าบ
 
     for (top, right, bottom, left), name in zip(face_locations, face_names):
         top *= 4

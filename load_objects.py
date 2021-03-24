@@ -13,6 +13,8 @@ all_face_encodings["obama"] = face_recognition.face_encodings(img1)[0]
 img2 = face_recognition.load_image_file("biden.jpeg")
 all_face_encodings["biden"] = face_recognition.face_encodings(img2)[0]
 
+print(all_face_encodings)
+
 with open('dataset_faces.dat', 'wb') as f:
     pickle.dump(all_face_encodings, f)
 
