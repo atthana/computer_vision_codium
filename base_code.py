@@ -18,35 +18,43 @@ import known_faces as faces
 # 3. สร้าง function มาสำหรับถ่าย VDO แล้วก้อ capture หน้าออกมาเยอะๆเลย
 # 4. แต่หลังจากได้หน้าออกมาเยอะๆแล้ว จะต้องสร้าง function มา rename ชื่อให้มันและตามด้วยตัวเลขเรียงกันไปเยอะๆด้วย
 
-face_locations = []
-face_encodings = []
-face_names = []
-
+# face_locations = []
+# face_encodings = []
+# face_names = []
+#
 process_this_frame = True
-# ===================== Process to learn to make dataset ===================================
-
-
-known_face_names = []
-known_face_encodings = []
-
-for face in faces.known_faces:
-    try:
-        print(face)
-        known_face_names.append(face[0])
-        face_image = face_recognition.load_image_file(face[1])
-        face_encoding = face_recognition.face_encodings(face_image)[0]
-        known_face_encodings.append(face_encoding)
-
-        # with open('dataset_codium.dat', 'wb') as f:
-        #     pickle.dump(known_face_encodings, f)
-        #
-        # print('Finished creating dataset')
-    except IndexError as err:
-        print('--- Exception ---')
-        print(err)
-        pass
+# # ===================== Process to learn to make dataset ===================================
+#
+#
+# known_face_names = []
+# known_face_encodings = []
+#
+# for face in faces.known_faces:
+#     try:
+#         print(face)
+#         known_face_names.append(face[0])
+#         face_image = face_recognition.load_image_file(face[1])
+#         face_encoding = face_recognition.face_encodings(face_image)[0]
+#         known_face_encodings.append(face_encoding)
+#
+#
+#     except IndexError as err:
+#         print('--- Exception ---')
+#         print(err)
+#         pass
+#
+# with open('dataset_codium.dat', 'wb') as f:
+#     pickle.dump(known_face_encodings, f)
+#
+# print('Finished creating dataset')
 
 # ======================= Below is process to compare faces from camera ==================================
+with open('dataset_codium_encoding.dat', 'rb') as f:
+    known_face_encodings = pickle.load(f)
+
+with open('dataset_codium_name.dat', 'rb') as f:
+    known_face_names = pickle.load(f)
+
 
 video_capture = cv2.VideoCapture(0)
 
