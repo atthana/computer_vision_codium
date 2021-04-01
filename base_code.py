@@ -3,7 +3,6 @@ import pickle
 import cv2
 import face_recognition
 import numpy as np
-import known_faces as faces
 
 # https://github.com/ageitgey/face_recognition/blob/master/examples/facerec_from_webcam_faster.py
 # 1. Need to load all images and resize photos and make a new set in new folder.
@@ -17,36 +16,9 @@ import known_faces as faces
 # 2. จะเช็คยังไงว่า อันนี้คือ check-in อันนีี้คือ check-out
 # 3. สร้าง function มาสำหรับถ่าย VDO แล้วก้อ capture หน้าออกมาเยอะๆเลย
 # 4. แต่หลังจากได้หน้าออกมาเยอะๆแล้ว จะต้องสร้าง function มา rename ชื่อให้มันและตามด้วยตัวเลขเรียงกันไปเยอะๆด้วย
+# 5. ถามกุ๊กกิ๊ก ตรงไหนใน code ที่เป้นการ count frame แต่ละครั้งที่มันระบุชื่อถูก
 
-# face_locations = []
-# face_encodings = []
-# face_names = []
-#
 process_this_frame = True
-# # ===================== Process to learn to make dataset ===================================
-#
-#
-# known_face_names = []
-# known_face_encodings = []
-#
-# for face in faces.known_faces:
-#     try:
-#         print(face)
-#         known_face_names.append(face[0])
-#         face_image = face_recognition.load_image_file(face[1])
-#         face_encoding = face_recognition.face_encodings(face_image)[0]
-#         known_face_encodings.append(face_encoding)
-#
-#
-#     except IndexError as err:
-#         print('--- Exception ---')
-#         print(err)
-#         pass
-#
-# with open('dataset_codium.dat', 'wb') as f:
-#     pickle.dump(known_face_encodings, f)
-#
-# print('Finished creating dataset')
 
 # ======================= Below is process to compare faces from camera ==================================
 with open('dataset_codium_encoding.dat', 'rb') as f:
@@ -55,8 +27,9 @@ with open('dataset_codium_encoding.dat', 'rb') as f:
 with open('dataset_codium_name.dat', 'rb') as f:
     known_face_names = pickle.load(f)
 
-
 video_capture = cv2.VideoCapture(0)
+
+count_correct_face = 0
 
 while True:
 
@@ -72,19 +45,22 @@ while True:
         face_encodings = face_recognition.face_encodings(rgb_small_frame, face_locations)
 
         face_names = []
-        for face_encoding in face_encodings:
 
+        for face_encoding in face_encodings:
             matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
             name = "Unknown"
 
             face_distances = face_recognition.face_distance(known_face_encodings, face_encoding)
             best_match_index = np.argmin(face_distances)
 
-            if min(face_distances) < 0.45:  # if distance is low that mean => very match
+            if min(face_distances) < 0.45:  # if distance value is low that mean => very match
                 name = known_face_names[best_match_index]
                 face_names.append(name)
+                count_correct_face += 1  # ผมต้องนับเพื่อที่จะนับเฟรมที่ถูกต้อง
+                print('----- count ----> ', count_correct_face)
             else:
                 face_names.append('Unknown')
+                print('------ unknown ------')
 
             # if matches[best_match_index]:  # The example checking match from github face_recognition.
             #     name = known_face_names[best_match_index]
