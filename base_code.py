@@ -30,6 +30,7 @@ with open('dataset_codium_name.dat', 'rb') as f:
 video_capture = cv2.VideoCapture(0)
 
 count_correct_face = 0
+count_name = {}
 
 while True:
 
@@ -56,11 +57,18 @@ while True:
             if min(face_distances) < 0.45:  # if distance value is low that mean => very match
                 name = known_face_names[best_match_index]
                 face_names.append(name)
-                count_correct_face += 1  # ผมต้องนับเพื่อที่จะนับเฟรมที่ถูกต้อง
-                print('----- count ----> ', count_correct_face)
+                if name in count_name:
+                    count_correct_face += 1  # ผมต้องนับเพื่อที่จะนับเฟรมที่ถูกต้อง
+                    count_name[name] = count_name[name] + 1
+                    print('----- count ----> ', count_correct_face)
+                else:
+                    count_name[name] = 1
             else:
                 face_names.append('Unknown')
+                count_correct_face = 0
                 print('------ unknown ------')
+            print('xxxxxxxxxxxx')
+            print(count_name)
 
             # if matches[best_match_index]:  # The example checking match from github face_recognition.
             #     name = known_face_names[best_match_index]
